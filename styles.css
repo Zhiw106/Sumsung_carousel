@@ -53,27 +53,46 @@ img {
     position: absolute;
     line-height: 2;
     align-items: baseline;
-    right:40px;
+    right: 40px;
     bottom: 5px;
 
 }
+
 /**/
 .fa-circle {
-    font-size: 8px;
+    font-size: 15px;
     font-weight: 500;
     padding: 3px;
 }
-#carouselBtn{
-    width:35px;
+
+#carouselBtn {
+    width: 35px;
     overflow: hidden;
     display: flex;
 }
-.fa-play,.fa-pause{
-    font-size: 15px;
-    padding:10px;
+
+.fa-play, .fa-pause {
+    font-size: 20px;
+    padding: 10px;
     align-self: center;
 }
 
 /*.fa-pause{*/
 /*    display: block;*/
 /*}*/
+.noChange{
+    color:black;
+}
+.showing{
+    font-weight:600;
+}
+.notShowing{
+   display: none;
+}
+
+.small{
+    font-size: 10px;
+}
+.smaller{
+    font-size: 3px;
+}
