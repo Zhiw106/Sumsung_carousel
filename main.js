@@ -47,9 +47,9 @@ const mouseover = function () {
 
 const mouseout = function () {
     if (playBtn.style.display === 'block') {
-    clearInterval(timer)
+        clearInterval(timer)
     } else {
-    timer = setInterval(funSwitchImage, 1000)
+        timer = setInterval(funSwitchImage, 1000)
     }
 }
 
@@ -84,11 +84,12 @@ function createElements() {
         eleDot.addEventListener('click', () => {
             console.log('i', i)
             hideAllElements(arrEleImg, arrEleDot)
-            clearInterval(timer)
+
             arrEleImg[i].style = 'display:block'
             arrEleDot[i].style = 'font-weight:600'
-
-            // timer=setInterval(funSwitchImage,1000)
+            indexImg = i
+            clearInterval(timer)
+            timer = setInterval(funSwitchImage, 1000)
         })
     }
 }
@@ -126,15 +127,15 @@ timer = setInterval(funSwitchImage, 1000)
 //previous image
 prevBtn.addEventListener('click', () => {
     clearInterval(timer)
-    const imgTag = document.querySelector('img')
+    // const imgTag = document.querySelector('img')
+    console.log(indexImg)
     let newIndex = indexImg--
     console.log('prev', newIndex)
     if (indexImg < 0) {
         indexImg = arrImgs.length - 1
     }
     hideAllElements(arrEleImg, arrEleDot)
-    imgTag.src = arrImgs[newIndex]
-    imgTag.style.display = 'block'
+    arrEleImg[newIndex].style.display = 'block'
     arrEleDot[newIndex].style = 'font-weight:600'
 })
 
@@ -143,7 +144,6 @@ prevBtn.addEventListener('click', () => {
 //next image
 nextBtn.addEventListener('click', () => {
     clearInterval(timer)
-    const imgTag = document.querySelector('img')
     let newIndex = indexImg++
     if (indexImg === arrEleImg.length) {
         indexImg = 0
@@ -151,9 +151,8 @@ nextBtn.addEventListener('click', () => {
 
     console.log('next', newIndex)
     hideAllElements(arrEleImg, arrEleDot)
-    imgTag.src = arrImgs[newIndex]
     // imgTag.style='display:block'   this way doesn't work
-    imgTag.style.display = 'block'
+    arrEleImg[newIndex].style.display = 'block'
     arrEleDot[newIndex].style = 'font-weight:600'
 })
 
@@ -175,5 +174,5 @@ pauseBtn.addEventListener('click', () => {
 
 nextBtn.addEventListener('mouseover', mouseover)
 nextBtn.addEventListener('mouseout', mouseout)
-prevBtn.addEventListener('mouseover', mouseover)
-prevBtn.addEventListener('mouseout', mouseout)
+// prevBtn.addEventListener('mouseover', mouseover)
+// prevBtn.addEventListener('mouseout', mouseout)
