@@ -33,19 +33,16 @@ const playBtn = document.getElementById('play')
 let arrEleImg = []
 let arrSpanDot = []
 let arrEleDot = []
-
-document.getElementById('')
-
-let indexImg = 0
-
+let eleImg
+let indexImg = -1
 let timer
 
 //previous button, next button, mouseover, mouseout effect
-const mouseover = function () {
+const mouseenter = function () {
     clearInterval(timer)
 }
 
-const mouseout = function () {
+const mouseleave = function () {
     if (playBtn.style.display === 'block') {
         clearInterval(timer)
     } else {
@@ -56,15 +53,15 @@ const mouseout = function () {
 //dynamically create elements based on image arrays,dot arrays and add event listener while creating them
 function createElements() {
     for (let i = 0; i < arrImgs.length; i++) {
-        let eleImg = document.createElement('img')
+        eleImg = document.createElement('img')
         arrEleImg.push(eleImg)
         eleImg.src = arrImgs[i]
         eleDivImg.appendChild(eleImg)
 
         console.log('arrEleImg', arrEleImg)
         console.log('eleDivImg', eleDivImg)
-        eleImg.addEventListener('mouseover', mouseover)
-        eleImg.addEventListener('mouseout', mouseout)
+        eleImg.addEventListener('mouseenter', mouseenter)
+        eleImg.addEventListener('mouseleave', mouseleave)
 
         let eleSpan = document.createElement('span')
         let eleDot = document.createElement('i')
@@ -111,14 +108,16 @@ function hideAllElements(arrElement1, arrElement2) {
 const funSwitchImage = function () {
     hideAllElements(arrEleImg, arrEleDot)
     let indexDot = indexImg
-    arrEleImg[indexImg].style = 'display:block'
-    arrEleDot[indexDot].style = 'font-weight:600'
 
-    indexImg++
-
-    if (indexImg === arrEleImg.length) {
+    if (indexImg === arrEleImg.length - 1) {
         indexImg = 0
-    }
+    } else
+        indexImg++
+
+    arrEleImg[indexImg].style = 'display:block'
+    arrEleDot[indexImg].style = 'font-weight:600'
+
+
 }
 
 //automatic carousel
@@ -126,17 +125,19 @@ timer = setInterval(funSwitchImage, 1000)
 
 //previous image
 prevBtn.addEventListener('click', () => {
+
+    // console.log('newIndex', newIndex)
+    if (indexImg === 0) {
+        indexImg = arrEleImg.length - 1
+    } else
+        indexImg = indexImg - 1
+
+    console.log('indexImg', indexImg)
     clearInterval(timer)
-    // const imgTag = document.querySelector('img')
-    console.log(indexImg)
-    let newIndex = indexImg--
-    console.log('prev', newIndex)
-    if (indexImg < 0) {
-        indexImg = arrImgs.length - 1
-    }
     hideAllElements(arrEleImg, arrEleDot)
-    arrEleImg[newIndex].style.display = 'block'
-    arrEleDot[newIndex].style = 'font-weight:600'
+    arrEleImg[indexImg].style.display = 'block'
+    arrEleDot[indexImg].style = 'font-weight:600'
+
 })
 
 //how to display previous image, how to get the current image index
@@ -144,16 +145,15 @@ prevBtn.addEventListener('click', () => {
 //next image
 nextBtn.addEventListener('click', () => {
     clearInterval(timer)
-    let newIndex = indexImg++
+    indexImg++
     if (indexImg === arrEleImg.length) {
         indexImg = 0
     }
 
-    console.log('next', newIndex)
     hideAllElements(arrEleImg, arrEleDot)
     // imgTag.style='display:block'   this way doesn't work
-    arrEleImg[newIndex].style.display = 'block'
-    arrEleDot[newIndex].style = 'font-weight:600'
+    arrEleImg[indexImg].style.display = 'block'
+    arrEleDot[indexImg].style = 'font-weight:600'
 })
 
 //play button
@@ -172,7 +172,9 @@ pauseBtn.addEventListener('click', () => {
 })
 
 
-nextBtn.addEventListener('mouseover', mouseover)
-nextBtn.addEventListener('mouseout', mouseout)
-// prevBtn.addEventListener('mouseover', mouseover)
-// prevBtn.addEventListener('mouseout', mouseout)
+nextBtn.addEventListener('mouseenter', mouseenter)
+nextBtn.addEventListener('mouseleave', mouseleave)
+prevBtn.addEventListener('mouseenter', mouseenter)
+prevBtn.addEventListener('mouseleave', mouseleave)
+
+funSwitchImage()
